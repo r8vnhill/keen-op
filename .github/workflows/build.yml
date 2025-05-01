@@ -53,4 +53,9 @@ jobs:
 
       - name: 🛂 Enforce version change
         run: |
-          git diff --cached --quiet gradle.properties || echo "✅ Version change detected. Please update the version in gradle.properties." && exit 1
+          if git diff --quiet origin/main... -- gradle.properties; then
+            echo "❌ Version not updated in gradle.properties. Please update the version before pushing."
+            exit 1
+          else
+            echo "✅ Version change detected in gradle.properties."
+          fi
