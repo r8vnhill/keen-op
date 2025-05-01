@@ -1,15 +1,19 @@
 #!/bin/bash
 
-# Check if gradle.properties was changed
-if ! git diff --cached --quiet gradle.properties || ! git diff --quiet gradle.properties; then
-    if grep -q "^version=" gradle.properties; then
-        echo "✅ gradle.properties updated."
-        exit 0
-    else
-        echo "❌ gradle.properties must define a version."
-        exit 1
-    fi
-else
-    echo "❌ You must update the version in gradle.properties before pushing."
-    exit 1
+set -euo pipefail
+
+# Check if gradle.properties has been modified in this push
+if git diff --cached --quiet -- gradle.properties; then
+  echo "❌ You must update the version in gradle.properties before pushing."
+  exit 1
 fi
+
+# Ensure gradle.properties contains a non-empty version
+version_line=$(grep "^version=" gradle.properties || true)
+if [[ -z "$version_line" || "$version_line" == "version=" ]]; then
+  echo "❌ gradle.properties must contain a valid non-empty version (e.g., version=1.0.0)"
+  exit 1
+fi
+
+echo "✅ gradle.properties includes version change: $version_line"
+exit 0

@@ -1,26 +1,47 @@
-# Ignore Gradle project-specific cache directory
-.gradle
+# === Gradle ===
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar  # allow wrapper JAR to be tracked
+build/
+!**/build.gradle.kts
+!**/settings.gradle.kts
+!**/gradle.properties
 
-# Ignore Gradle build output directory
-build
-
-# IDE files
+# === IntelliJ IDEA ===
 .idea/
 *.iml
 *.ipr
 *.iws
 
-# Logs and build outputs
-logs
-out/
+# === Kotlin / Java Compilation ===
+*.class
+*.jar
+*.war
+*.ear
 
-# OS files
+# === Logs / Output / Reports ===
+logs/
+out/
+test-reports/
+*.log
+
+# === OS-generated files ===
 .DS_Store
 Thumbs.db
 
-# Gradle wrapper temp files
-.gradle/*
-!gradle-wrapper.jar
+# === Environment & tools ===
+.env
+.env.local
+venv/
+node_modules/
 
-# Test reports
-test-reports/
+# === JetBrains Rider / Android Studio ===
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+
+# === Kotlin DSL cache ===
+.gradle/kotlin/
+
+# === VS Code === (optional if contributors use it)
+.vscode/
