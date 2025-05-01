@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Check if gradle.properties was changed
+if ! git diff --cached --quiet gradle.properties || ! git diff --quiet gradle.properties; then
+    if grep -q "^version=" gradle.properties; then
+        echo "✅ gradle.properties updated."
+        exit 0
+    else
+        echo "❌ gradle.properties must define a version."
+        exit 1
+    fi
+else
+    echo "❌ You must update the version in gradle.properties before pushing."
+    exit 1
+fi
