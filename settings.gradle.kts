@@ -1,4 +1,11 @@
-// Automatically resolve JDKs via Foojay
+pluginManagement {
+    includeBuild("convention-plugins")
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
 }
