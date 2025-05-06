@@ -3,15 +3,10 @@
  * 2-Clause BSD License.
  */
 
-plugins {
-    `java-library`
-}
-
-testing {
-    suites {
-        @Suppress("UnstableApiUsage")
-        getting(JvmTestSuite::class) {  // Incubating API
-            useJUnitJupiter() // Incubating API
-        }
+tasks.withType<Test>().forEach {
+    it.useJUnitPlatform()
+    it.testLogging {
+        events("passed", "skipped", "failed")
+        showStandardStreams = true
     }
 }
