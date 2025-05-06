@@ -1,10 +1,12 @@
 [versions]
-commons-math3 = "3.6.1"
-guava = "33.4.5-jre"
+kotlin = "2.1.20"
 
 [libraries]
-commons-math3 = { module = "org.apache.commons:commons-math3", version.ref = "commons-math3" }
-guava = { module = "com.google.guava:guava", version.ref = "guava" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.1.20" }
+# You can define plugin aliases here, for example:
+# kotlin-dsl = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+[bundles]
+# Group related libraries if needed in the future
