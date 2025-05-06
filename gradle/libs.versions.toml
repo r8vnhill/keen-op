@@ -1,12 +1,15 @@
 [versions]
 kotlin = "2.1.20"
+kotlin-bin-compatibility-validator = "0.17.0"
+detekt = "1.23.8"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 [plugins]
-# You can define plugin aliases here, for example:
-# kotlin-dsl = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-bin-compatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlin-bin-compatibility-validator" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 [bundles]
 # Group related libraries if needed in the future

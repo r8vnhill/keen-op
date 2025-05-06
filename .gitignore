@@ -1,6 +1,7 @@
 # === Gradle ===
 .gradle/
 !gradle/wrapper/gradle-wrapper.jar  # allow wrapper JAR to be tracked
+!convention-plugins/gradle/wrapper/gradle-wrapper.jar  # allow wrapper JAR to be tracked
 build/
 !**/build.gradle.kts
 !**/settings.gradle.kts
