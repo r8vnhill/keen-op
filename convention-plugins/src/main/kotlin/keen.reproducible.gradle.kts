@@ -9,7 +9,7 @@ plugins {
 // were built.
 // This improves:
 // - Build cache hit rates (across CI machines or local/dev builds)
-// - Artifact verification and integrity (e.g. for supply chain security)
+// - Artifact verification and integrity (e.g., for supply chain security)
 // - Compliance with projects like https://reproducible-builds.org
 //
 // Official Gradle docs:

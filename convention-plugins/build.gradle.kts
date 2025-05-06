@@ -6,5 +6,5 @@ plugins {
 
 dependencies {
     // Provides access to Kotlin-specific Gradle plugin APIs
-    compileOnly(libs.kotlin.gradle.plugin) // Use compileOnly to avoid including the plugin in the build output
+    implementation(libs.kotlin.gradle.plugin)
 }
