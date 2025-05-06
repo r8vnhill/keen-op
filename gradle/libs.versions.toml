@@ -4,12 +4,18 @@ kotlin-bin-compatibility-validator = "0.17.0"
 detekt = "1.23.8"
 
 [libraries]
+# Core Kotlin Gradle plugin (required for all Kotlin projects)
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+# Optional formatting plugin for Detekt (requires detekt CLI/tooling)
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 [plugins]
+# Plugin to check binary compatibility of public APIs
 kotlin-bin-compatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlin-bin-compatibility-validator" }
+
+# Static analysis plugin for Kotlin codebases
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 [bundles]
-# Group related libraries if needed in the future
+# Define bundles like `bundle.kotlin = [ "kotlin-stdlib", "kotlin-reflect" ]` if needed
