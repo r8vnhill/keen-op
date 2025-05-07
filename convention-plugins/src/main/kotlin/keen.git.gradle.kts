@@ -3,10 +3,11 @@
  * 2-Clause BSD License.
  */
 
-import tasks.git.GitStatus
+import tasks.git.GitCommit
 
 plugins {
     id("keen.reproducible")
 }
 
-tasks.register<GitStatus>("gitStatus")
+
+tasks.register<GitCommit>("gitCommit")
