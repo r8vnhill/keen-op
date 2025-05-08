@@ -1,13 +1,17 @@
-// Include the convention plugin build to make its plugins available without publishing them.
-// This allows using precompiled script plugins like `keen.reproducible` across all modules.
+// region : PLUGIN MANAGEMENT ─────────────────────────────────────────────-──────────────────────────────-─────────────
+// Include local builds that define convention and build logic plugins.
+//
+// This enables the use of precompiled script plugins (e.g., `keen.reproducible`) throughout the project without needing
+// to publish them to a remote repository.
 pluginManagement {
-    includeBuild("convention-plugins")
+    includeBuild("convention-plugins")    // Reusable precompiled Gradle plugins for project modules
 
     repositories {
-        mavenCentral()
-        gradlePluginPortal()
+        mavenCentral()                    // For dependencies from Maven Central
+        gradlePluginPortal()              // For resolving external Gradle plugins
     }
 }
+// endregion ───────────────────────────────────────────────────────────────-──────────────────────────────-───────── //
 
 // Automatically resolves the required JDK using Foojay (https://foojay.io).
 // Ensures consistent Java toolchains across environments without manual setup.

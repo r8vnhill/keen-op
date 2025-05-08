@@ -1,33 +1,53 @@
-// Sets the name of the root project.
-// This is used in logs and directory naming during builds.
-rootProject.name = "convention-plugins"
+/*
+ * Copyright (c) 2025, Ignacio Slater M.
+ * 2-Clause BSD License.
+ */
 
-// Configures how Gradle resolves plugins declared in `plugins {}` blocks, such as in build scripts for convention
-// plugins.
+// region : ROOT PROJECT NAME ──────────────────────────────────────────────────────────────────────────────────────────
+// This name appears in IDEs, build output, and when publishing artifacts.
+rootProject.name = "convention-plugins"
+// endregion ──────────────────────────────────────────────────────────────────────────────────────────────────────── //
+
+// region : PLUGIN RESOLUTION MANAGEMENT ───────────────────────────────────────────────────────────────────────────────
+// Controls how Gradle locates plugins declared in `plugins {}` blocks,
+// such as those in convention plugins or build logic scripts.
 pluginManagement {
     repositories {
-        gradlePluginPortal()    // First, consult Gradle's Plugin Portal (official source for Gradle plugins)
-        mavenCentral()          // Fallback to Maven Central for plugins published there
+        gradlePluginPortal() // Primary source for official and community Gradle plugins
+        mavenCentral()       // Fallback for plugins published to Maven Central
     }
 }
+// endregion ──────────────────────────────────────────────────────────────────────────────────────────────────────── //
 
-@Suppress("UnstableApiUsage") // Suppresses warnings for incubating APIs used below
+// region : DEPENDENCY RESOLUTION MANAGEMENT ───────────────────────────────────────────────────────────────────────────
+// Configures central repository resolution and version catalogs.
+// Ensures consistent dependency resolution across all modules.
+@Suppress("UnstableApiUsage") // Needed for `repositoriesMode`, which is still incubating
 dependencyResolutionManagement {
-    // Enforce repositories declared here over any declared in individual build scripts.
-    // This avoids duplication and makes repository resolution predictable.
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS) // Incubating API
+    // Prefer repositories declared here over those declared in individual build scripts.
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
 
-    // Repositories used to resolve dependencies declared in build scripts.
     repositories {
         gradlePluginPortal()
         mavenCentral()
     }
 
-    // Declares a shared version catalog named `libs`, accessible via `libs.<alias>` in build scripts.
-    // This catalog centralizes dependency and plugin versions across the project.
+    // Define a shared version catalog named `libs`, making dependency and plugin versions consistent.
     versionCatalogs {
         create("libs") {
             from(files("../gradle/libs.versions.toml"))
         }
     }
 }
+// endregion ──────────────────────────────────────────────────────────────────────────────────────────────────────── //
+
+// region : TOOLCHAIN RESOLUTION ───────────────────────────────────────────────────────────────────────────────────────
+// Toolchain resolution support via Foojay API
+//
+// Adds automatic resolution of JDKs from Foojay when using toolchains.
+// Recommended in clean environments or CI where the JDK must be downloaded.
+// See: https://docs.gradle.org/current/userguide/toolchains.html#sub:download_repositories
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
+}
+// endregion ──────────────────────────────────────────────────────────────────────────────────────────────────────── //
