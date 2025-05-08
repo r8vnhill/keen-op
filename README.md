@@ -1,7 +1,7 @@
 # KEEN-GO: Generalized Optimization Framework
 
 [![CI](https://github.com/r8vnhill/keen-go/actions/workflows/build.yml/badge.svg)](https://github.com/r8vnhill/keen-go/actions/workflows/build.yml)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.10-blueviolet?logo=kotlin)](https://kotlinlang.org/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.20-blueviolet?logo=kotlin)](https://kotlinlang.org/)
 [![Gradle](https://img.shields.io/badge/Gradle-8.14-blue?logo=gradle)](https://gradle.org/)
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD--2--Clause-blue.svg)](LICENSE)
 [![Pre-Alpha](https://img.shields.io/badge/status-pre--alpha-orange)](#)

@@ -3,11 +3,6 @@
  * 2-Clause BSD License.
  */
 
-/*
- * Copyright (c) 2025, Ignacio Slater M.
- * 2-Clause BSD License.
- */
-
 // region : TEST CONFIGURATION ─────────────────────────────────────────────────────────────────────────────────────────
 // Configure testing behavior for all tasks of type Test.
 //

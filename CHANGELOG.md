@@ -16,11 +16,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added shared Java toolchain configuration:
     - Introduced `JvmToolchain.kt` utility for setting a consistent Java version (Java 22).
     - Applied the shared Java toolchain setup in the `keen.jvm` convention plugin for both Java and Kotlin compilers.
+- Introduced initial `core` module:
+    - Defined `OptimizationEngine` interface and `State<T>` abstraction under `commonMain`.
+    - Initialized Kotlin source sets: `commonMain`, `jvmMain`, and `jvmTest`.
+    - Added `core/settings.gradle.kts` and registered `:core` in the root project.
+- Added `kotest` as a dependency in version catalog (`libs.versions.toml`).
 
 ### 🔧 Changed
 
 - Improved annotations and compiler configuration comments in `keen.kotlin` plugin for clarity.
 - Improved contributing guidelines in `README.md`, including references to `dev-resources/` and a clear summary of the Code of Conduct based on Contributor Covenant v2.1.
+- Upgraded Kotlin to `2.1.20` and updated badge in `README.md`.
+- Bumped CI to use Java 22 instead of Java 21.
+
 
 ## [0.0.2.2] – 2025-04-30
 

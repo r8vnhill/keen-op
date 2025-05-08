@@ -23,7 +23,11 @@ java.toolchain {
     setDefaultJavaVersion() // Applies the default Java version (e.g., Java 22)
 }
 
-kotlin.jvmToolchain {
-    setDefaultJavaVersion() // Applies the same version for Kotlin JVM compilation
+kotlin {
+    jvm()
+
+    jvmToolchain {
+        setDefaultJavaVersion() // Applies the same version for Kotlin JVM compilation
+    }
 }
 // endregion ──────────────────────────────────────────────────────────────────────────────────────────────────────── //

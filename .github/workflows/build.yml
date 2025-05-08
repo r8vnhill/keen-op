@@ -8,18 +8,18 @@ on:
 
 jobs:
   build:
-    name: Build and Test on Java 21
+    name: Build and Test on Java 22
     runs-on: ubuntu-latest
 
     steps:
       - name: 🛎️ Checkout code
         uses: actions/checkout@v4
 
-      - name: ☕ Set up JDK 21 with Gradle cache
+      - name: ☕ Set up JDK 22 with Gradle cache
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 22
           cache: gradle
 
       - name: 📦 Cache Gradle

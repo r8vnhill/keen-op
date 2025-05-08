@@ -7,3 +7,19 @@ plugins {
     id("keen.library")
     id("keen.jvm")
 }
+
+kotlin {
+    sourceSets {
+        getByName("commonMain") {
+            // ...
+        }
+
+        getByName("jvmMain") {
+            // ...
+        }
+
+        getByName("jvmTest") {
+
+        }
+    }
+}
