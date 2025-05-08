@@ -7,10 +7,8 @@ import utils.JvmToolchain.setDefaultJavaVersion
 
 // region : SHARED KOTLIN BUILD CONFIGURATION ──────────────────────────────────────────────────────────────────────────
 // Apply shared Kotlin build configuration via convention plugin.
-//
-// `keen.kotlin` encapsulates common Kotlin setup, such as compiler flags, language features, and coding standards.
 plugins {
-    id("keen.kotlin")
+    kotlin("jvm")
 }
 // endregion ──────────────────────────────────────────────────────────────────────────────────────────────────────── //
 
@@ -23,11 +21,7 @@ java.toolchain {
     setDefaultJavaVersion() // Applies the default Java version (e.g., Java 22)
 }
 
-kotlin {
-    jvm()
-
-    jvmToolchain {
-        setDefaultJavaVersion() // Applies the same version for Kotlin JVM compilation
-    }
+kotlin.jvmToolchain {
+    setDefaultJavaVersion() // Applies the same version for Kotlin JVM compilation
 }
 // endregion ──────────────────────────────────────────────────────────────────────────────────────────────────────── //

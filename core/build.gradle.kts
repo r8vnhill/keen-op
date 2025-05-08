@@ -10,33 +10,9 @@ plugins {
 }
 
 val detektFormatting = libs.detekt.formatting.get().apply { "$group:$module:$version" }
+val kotestBundle = libs.bundles.kotest
 
 dependencies {
     detektPlugins(detektFormatting)
-}
-
-val kotestBundle = libs.bundles.kotest
-
-kotlin {
-    sourceSets {
-        getByName("commonMain") {
-            // ...
-        }
-
-        getByName("jvmMain") {
-            // ...
-        }
-
-        getByName("jvmTest") {
-            implementation(kotestBundle)
-        }
-    }
-}
-
-detekt {
-    // Tell Detekt to look at commonMain and jvmMain
-    source.setFrom(
-        "src/commonMain/kotlin",
-        "src/jvmMain/kotlin"
-    )
+    testImplementation(kotestBundle)
 }

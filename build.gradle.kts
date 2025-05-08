@@ -18,13 +18,3 @@ apiValidation {
     )
 }
 
-subprojects {
-    pluginManager.withPlugin("io.gitlab.arturbosch.detekt") {
-        tasks.named("detekt").configure {
-            dependsOn(
-                tasks.withType<io.gitlab.arturbosch.detekt.Detekt>()
-                    .matching { it.name != "detekt" }
-            )
-        }
-    }
-}
