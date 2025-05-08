@@ -28,4 +28,4 @@ dependencyResolutionManagement {
 rootProject.name = "keen-go"
 
 // Include project modules
- include("core")
+

@@ -12,9 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ✨ Added
 
 - Introduced `CHANGELOG.md` following Keep a Changelog and SemVer standard.
-- Added `keen.git` convention plugin with initial `GitStatus` task.
-- Applied `keen.git` plugin to the root build for future Git-related integrations.
 - Enhanced test logging in `keen.library` by enabling `useJUnitPlatform()`.
+
+### 🔄 Changed
+
+- Improved annotations and compiler configuration comments in `keen.kotlin` plugin for clarity.
 
 ## [0.0.2.2] – 2025-04-30
 

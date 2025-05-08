@@ -3,29 +3,32 @@
  * 2-Clause BSD License.
  */
 
+// ───────────────────────────────────────────────────────────────
+// Applies essential plugins for reproducibility and Kotlin MPP.
+// ───────────────────────────────────────────────────────────────
 plugins {
-    id("keen.reproducible")
-    kotlin("multiplatform")
+    id("keen.reproducible") // Custom plugin to ensure build reproducibility (e.g., consistent archive output)
+    kotlin("multiplatform") // Enables support for Kotlin Multiplatform projects
 }
 
-//// Apply a specific Java toolchain to ease working on different environments.
-//java {
-//    toolchain {
-//        languageVersion = JavaLanguageVersion.of(21)
-//    }
-//}
-//
-//tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-//    compilerOptions {
-//        jvmTarget.set(JvmTarget.JVM_21)
-//        freeCompilerArgs.addAll(listOf("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn"))
-//    }
-//}
-//
-//tasks.register<Copy>("installGitHooks") {
-//    from(layout.projectDirectory.dir("scripts/git-hooks"))
-//    into(layout.projectDirectory.dir(".git/hooks"))
-//    fileMode = 0b111101101 // 0755
-//}
-//
-//tasks.getByName("build").dependsOn("installGitHooks")
+// ───────────────────────────────────────────────────────────────
+// Configures Kotlin Multiplatform-specific settings.
+// ───────────────────────────────────────────────────────────────
+kotlin {
+    // Additional compiler options for stricter and experimental features
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-Xexpect-actual-classes",      // Allows expect/actual classes across platforms
+            "Xjsr305=strict",               // Enforces nullability annotations for Java interop
+            "-opt-in=kotlin.RequiresOptIn"  // Enables usage of opt-in APIs
+        )
+    }
+
+    // Apply language settings to all source sets
+    sourceSets.all {
+        languageSettings {
+            optIn("cl.ravenhill.keen.ExperimentalKeen")    // Enables use of experimental Keen APIs
+            optIn("io.kotest.common.ExperimentalKotest")   // Enables use of experimental Kotest APIs
+        }
+    }
+}
