@@ -11,6 +11,12 @@ kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 # Optional formatting plugin for Detekt (requires detekt CLI/tooling)
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
+kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+
 [plugins]
 # Plugin to check binary compatibility of public APIs
 kotlin-bin-compatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlin-bin-compatibility-validator" }
@@ -19,4 +25,4 @@ kotlin-bin-compatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-va
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 [bundles]
-# Define bundles like `bundle.kotlin = [ "kotlin-stdlib", "kotlin-reflect" ]` if needed
+kotest = ["kotest-assertions-core", "kotest-framework-datatest", "kotest-framework-engine", "kotest-property", "kotest-runner-junit5"]

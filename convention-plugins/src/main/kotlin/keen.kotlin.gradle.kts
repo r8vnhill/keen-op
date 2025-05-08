@@ -19,7 +19,6 @@ kotlin {
         @Suppress("SpellCheckingInspection")
         freeCompilerArgs.addAll(
             "-Xexpect-actual-classes",      // Allows expect/actual classes across platforms
-            "Xjsr305=strict",               // Enforces nullability annotations for Java interop
             "-opt-in=kotlin.RequiresOptIn"  // Enables usage of opt-in APIs
         )
     }
