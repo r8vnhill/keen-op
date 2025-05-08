@@ -13,10 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Introduced `CHANGELOG.md` following Keep a Changelog and SemVer standard.
 - Enhanced test logging in `keen.library` by enabling `useJUnitPlatform()`.
+- Added shared Java toolchain configuration:
+    - Introduced `JvmToolchain.kt` utility for setting a consistent Java version (Java 22).
+    - Applied the shared Java toolchain setup in the `keen.jvm` convention plugin for both Java and Kotlin compilers.
 
-### 🔄 Changed
+### 🔧 Changed
 
 - Improved annotations and compiler configuration comments in `keen.kotlin` plugin for clarity.
+- Improved contributing guidelines in `README.md`, including references to `dev-resources/` and a clear summary of the Code of Conduct based on Contributor Covenant v2.1.
 
 ## [0.0.2.2] – 2025-04-30
 
