@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Applied the shared Java toolchain setup in the `keen.jvm` convention plugin for both Java and Kotlin compilers.
 - Added `kotest` as a dependency in version catalog (`libs.versions.toml`).
 - Introduced basic optimization interfaces and engine:
-    - `Feature<T, F>`: A generic representation with `map` and `flatMap`.
+    - `Feature<T, F>`: A generic representation with `map`, `flatMap`, and `zipWith` methods.
     - `ScalarFeature`: A concrete implementation using a single `Double` value.
     - `OptimizationEngine<F>`: Interface for optimizers with an `objectiveFunction`.
     - `SimpleHillClimber`: A basic hill climbing implementation operating on `ScalarFeature`.
