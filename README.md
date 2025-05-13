@@ -1,15 +1,15 @@
-# KEEN-GO: Generalized Optimization Framework
+# KEEN-OP: Optimization framework for exact and approximate optimization
 
-[![CI](https://github.com/r8vnhill/keen-go/actions/workflows/build.yml/badge.svg)](https://github.com/r8vnhill/keen-go/actions/workflows/build.yml)
+[![CI](https://github.com/r8vnhill/keen-op/actions/workflows/build.yml/badge.svg)](https://github.com/r8vnhill/keen-op/actions/workflows/build.yml)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.1.20-blueviolet?logo=kotlin)](https://kotlinlang.org/)
 [![Gradle](https://img.shields.io/badge/Gradle-8.14-blue?logo=gradle)](https://gradle.org/)
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD--2--Clause-blue.svg)](LICENSE)
 [![Pre-Alpha](https://img.shields.io/badge/status-pre--alpha-orange)](#)
 
-**KEEN-GO** aims to be a flexible and extensible optimization framework for solving a wide range of optimization problems, including combinatorial, numerical, and multi-objective domains.
+**KEEN-OP** aims to be a flexible and extensible optimization framework for solving a wide range of optimization problems, including combinatorial, numerical, and multi-objective domains.
 
 > ⚠️ **Project status:** Early-stage / pre-alpha  
-> KEEN-GO is currently under active development. At this stage, the repository primarily contains project configuration and build setup. No user-facing features are implemented yet.
+> KEEN-OP is currently under active development. At this stage, the repository primarily contains project configuration and build setup. No user-facing features are implemented yet.
 
 ## ✨ Goals (planned)
 - Support for modular optimization algorithms (e.g., genetic algorithms, differential evolution)
@@ -27,8 +27,8 @@
 You can clone and build the project to explore the current structure:
 
 ```bash
-git clone https://github.com/r8vnhill/keen-go.git
-cd keen-go
+git clone https://github.com/r8vnhill/keen-op.git
+cd keen-op
 ./gradlew build
 ```
 
