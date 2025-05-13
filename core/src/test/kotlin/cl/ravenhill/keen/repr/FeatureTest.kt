@@ -75,7 +75,6 @@ import io.kotest.property.checkAll
  * - [Your easy guide to Monads, Applicatives, & Functors](https://medium.com/@lettier/your-easy-guide-to-monads-applicatives-functors-862048d61610)
  * - [Functor, Monad, Applicative (Haskell Wiki)](https://wiki.haskell.org/Functor-Applicative-Monad-Proposal)
  */
-
 @DisplayName("Feature Laws")
 class FeatureTest : FreeSpec({
 
