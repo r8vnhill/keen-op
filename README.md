@@ -1,4 +1,4 @@
-# KEEN-OP: Optimization framework for exact and approximate optimization
+# KEEN-OP: Framework for exact and approximate optimization
 
 [![CI](https://github.com/r8vnhill/keen-op/actions/workflows/build.yml/badge.svg)](https://github.com/r8vnhill/keen-op/actions/workflows/build.yml)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.1.20-blueviolet?logo=kotlin)](https://kotlinlang.org/)
