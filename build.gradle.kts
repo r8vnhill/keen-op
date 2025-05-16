@@ -18,3 +18,4 @@ apiValidation {
     )
 }
 
+subprojects {}
