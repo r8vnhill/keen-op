@@ -65,7 +65,7 @@ object Versions {
 fun validateSemanticVersion(block: () -> String): ReadOnlyProperty<Any?, String> =
     object : ReadOnlyProperty<Any?, String> {
         // Regex matching semantic versions like "1.0.0" or "1.0.0-SNAPSHOT"
-        private val regex = Regex("""\d+\.\d+\.\d+(-SNAPSHOT)?""")
+        private val regex = Regex("""\d+\.\d+\.\d+(-SNAPSHOT|-ALPHA|-BETA|-RC\.\d+)?""")
         // Lazily compute the version value on first access
         private val value by lazy(block)
 

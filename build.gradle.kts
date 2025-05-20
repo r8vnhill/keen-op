@@ -17,5 +17,3 @@ apiValidation {
         // "test-utils", "examples"
     )
 }
-
-subprojects {}
