@@ -46,7 +46,7 @@ package cl.ravenhill.keen.repr
  * @param T  The type of the value carried by this feature.
  * @param F  The concrete feature type that implements this interface (i.e., `F : Feature<T, F>`).
  */
-interface Feature<T, F> where F : Feature<T, F> {
+interface Feature<out T, F> where F : Feature<@UnsafeVariance T, F> {
 
     /**
      * Transforms the contained value using [f], preserving the feature context.
@@ -56,7 +56,8 @@ interface Feature<T, F> where F : Feature<T, F> {
      * @param f Function to apply to the current value.
      * @return A new instance of [F] containing the transformed value.
      */
-    fun map(f: (T) -> T): F
+    context(factory: FeatureFactory<@UnsafeVariance T, F>)
+    fun map(f: (T) -> @UnsafeVariance T): F = flatMap { factory.pure(f(it)) }
 
     /**
      * Chains a computation that returns a new feature context.
@@ -79,5 +80,5 @@ interface Feature<T, F> where F : Feature<T, F> {
      * @param combine Binary function to merge both feature values.
      * @return A new instance of [F] containing the combined result.
      */
-    fun zipWith(other: F, combine: (T, T) -> T): F
+    fun zipWith(other: F, combine: (T, T) -> @UnsafeVariance T): F
 }
