@@ -3,7 +3,8 @@
  * 2-Clause BSD License.
  */
 
-// region : TEST CONFIGURATION ─────────────────────────────────────────────────────────────────────────────────────────
+// region TEST CONFIGURATION
+
 // Configure testing behavior for all tasks of type Test.
 //
 // This ensures consistent logging and test platform usage across all projects that apply the `keen.library` convention
@@ -19,4 +20,4 @@ tasks.withType<Test>().all {
         showStandardStreams = true
     }
 }
-// endregion ──────────────────────────────────────────────────────────────────────────────────────────────────────── //
+// endregion

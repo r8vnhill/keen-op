@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import utils.JvmToolchain.DEFAULT_JAVA_VERSION
 
 /**
- * Utility for configuring a consistent Java toolchain version across Gradle build logic.
+ * Utility for configuring a consistent Java toolchain version across Gradle builds logic.
  *
  * Provides a reusable extension to set the default Java language version used across both Java and Kotlin toolchains.
  *
