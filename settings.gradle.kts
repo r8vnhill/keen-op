@@ -28,6 +28,18 @@ dependencyResolutionManagement {
     }
 }
 
+// region TOOLCHAIN RESOLUTION
+
+// Toolchain resolution support via Foojay API
+//
+// Adds automatic resolution of JDKs from Foojay when using toolchains.
+// Recommended in clean environments or CI where the JDK must be downloaded.
+// See: https://docs.gradle.org/current/userguide/toolchains.html#sub:download_repositories
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
+}
+// endregion
+
 // Root project name used in logs and outputs
 rootProject.name = "keen-op"
 

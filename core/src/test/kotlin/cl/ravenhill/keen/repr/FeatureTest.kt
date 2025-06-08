@@ -83,7 +83,11 @@ class FeatureTest : FreeSpec({
             "identity: mapping with identity should return the same feature" {
                 checkAll(arbFeature()) { feature ->
                     val identity = { x: Int -> x }
-                    feature.map(identity) shouldBe feature
+                    object : FeatureFactory<Int, MockFeature> {
+                        override val pure = ::MockFeature
+                    }.run {
+                        feature.map(identity) shouldBe feature
+                    }
                 }
             }
 
@@ -162,14 +166,6 @@ private fun arbFeature(): Arb<MockFeature> =
  * @property x The integer value held by this mock feature.
  */
 private data class MockFeature(val x: Int) : Feature<Int, MockFeature> {
-
-    /**
-     * Applies the given function to the internal value and returns a new [MockFeature].
-     *
-     * @param f The function to apply to the value.
-     * @return A new instance with the transformed value.
-     */
-    override fun map(f: (Int) -> Int): MockFeature = copy(x = f(x))
 
     /**
      * Applies the given function to the internal value and returns the resulting feature.
