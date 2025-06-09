@@ -80,23 +80,21 @@ class FeatureTest : FreeSpec({
 
     "A Feature" - {
         "functor laws" - {
-            "identity: mapping with identity should return the same feature" {
-                checkAll(arbFeature()) { feature ->
-                    val identity = { x: Int -> x }
-                    object : FeatureFactory<Int, MockFeature> {
-                        override val pure = ::MockFeature
-                    }.run {
+            with(MockFeatureFactory<Int>()) {
+                "identity: mapping with identity should return the same feature" {
+                    checkAll(arbFeature()) { feature ->
+                        val identity = { x: Int -> x }
                         feature.map(identity) shouldBe feature
                     }
                 }
-            }
 
-            "composition: mapping f then g == mapping (g ∘ f)" {
-                checkAll(arbFeature(), arbComposedFunction, arbComposedFunction) { feature, f, g ->
-                    val left = feature.map(f.fn).map(g.fn)
-                    val right = feature.map { g.fn(f.fn(it)) }
-                    withClue("${f.name} ∘ ${g.name}") {
-                        left shouldBe right
+                "composition: mapping f then g == mapping (g ∘ f)" {
+                    checkAll(arbFeature(), arbComposedFunction, arbComposedFunction) { feature, f, g ->
+                        val left = feature.map(f.fn).map(g.fn)
+                        val right = feature.map { g.fn(f.fn(it)) }
+                        withClue("${f.name} ∘ ${g.name}") {
+                            left shouldBe right
+                        }
                     }
                 }
             }
@@ -104,7 +102,7 @@ class FeatureTest : FreeSpec({
 
         "monad laws" - {
             // Identity function lifted into Feature context
-            val unit: (Int) -> MockFeature = { MockFeature(it) }
+            val unit: (Int) -> MockFeature<Int> = { MockFeature(it) }
 
             "left identity: flatMap(unit) == unit" {
                 checkAll(Arb.int()) { a ->
@@ -153,38 +151,8 @@ class FeatureTest : FreeSpec({
  *
  * @return An [Arb] that produces instances of [MockFeature].
  */
-private fun arbFeature(): Arb<MockFeature> =
-    Arb.int().map(::MockFeature)
-
-/**
- * Mock implementation of the [Feature] abstraction used for property-based testing.
- *
- * This class is used solely for verifying functor and monad laws in the test suite.
- * It provides minimal but lawful implementations of [map], [flatMap], and [zipWith], enabling isolated validation of
- * the laws without relying on domain-specific logic.
- *
- * @property x The integer value held by this mock feature.
- */
-private data class MockFeature(val x: Int) : Feature<Int, MockFeature> {
-
-    /**
-     * Applies the given function to the internal value and returns the resulting feature.
-     *
-     * @param f The function to apply, producing a new feature instance.
-     * @return The result of applying [f] to the current value.
-     */
-    override fun <T2, F2> flatMap(f: (Int) -> F2): F2 where F2 : Feature<T2, F2> = f(x)
-
-    /**
-     * Combines this feature with another [MockFeature] using the provided function.
-     *
-     * @param other Another [MockFeature] to combine with.
-     * @param combine The binary function used to merge the two internal values.
-     * @return A new instance with the result of combining both values.
-     */
-    override fun zipWith(other: MockFeature, combine: (Int, Int) -> Int): MockFeature =
-        copy(x = combine(x, other.x))
-}
+private fun arbFeature(): Arb<MockFeature<Int>> =
+    Arb.int().map { MockFeature(it) }
 
 /**
  * Associates a human-readable name with a function from [Int] to [Int].
@@ -253,8 +221,8 @@ private val arbComposedFunction: Arb<NamedFunction> =
  *
  * @return An [Arb] that generates functions from [Int] to [MockFeature].
  */
-private fun arbIntToFeature(): Arb<(Int) -> MockFeature> =
-    arbComposedFunction.map { f -> f.fn andThen ::MockFeature }
+private fun arbIntToFeature(): Arb<(Int) -> MockFeature<Int>> =
+    arbComposedFunction.map { f -> f.fn andThen { x: Int -> MockFeature(x) } }
 
 /**
  * Composes two functions into a single function, applying them in left-to-right order.
