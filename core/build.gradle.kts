@@ -10,9 +10,11 @@ plugins {
 }
 
 val detektFormatting = libs.detekt.formatting.get().apply { "$group:$module:$version" }
-val kotestBundle = libs.bundles.kotest
 
 dependencies {
     detektPlugins(detektFormatting)
-    testImplementation(kotestBundle)
+
+    api(libs.bundles.arrow)
+
+    testImplementation(libs.bundles.kotest)
 }
