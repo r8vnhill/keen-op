@@ -7,8 +7,9 @@ package cl.ravenhill.keen.problem
 
 import arrow.core.NonEmptyCollection
 import arrow.core.nonEmptyListOf
+import cl.ravenhill.keen.problem.constrained.Constraint
+import cl.ravenhill.keen.problem.constrained.InequalityConstraint
 import cl.ravenhill.keen.util.EqualityThreshold
-import cl.ravenhill.keen.util.InequalityType
 
 interface Problem {
     val objectives: NonEmptyCollection<Objective<*>>
@@ -43,8 +44,8 @@ fun main() {
            1. x1^2 + x2^2 + x3^2 + x4^2 = 40
            2. x1 * x2 * x3 * x4 <= 25
          */
-        Problem(
-            Objective<Int> { (it[0] * it[3] * (it[0] + it[1] + it[2]) + it[2]).toDouble() },
+//        Problem(
+//            Objective<Int> { (it[0] * it[3] * (it[0] + it[1] + it[2]) + it[2]).toDouble() },
 //            constraints = listOf(
 //                EqualityConstraint<Int>(
 //                    left = { (it[0] * it[0] + it[1] * it[1] + it[2] * it[2] + it[3] * it[3]).toDouble() },
@@ -56,6 +57,6 @@ fun main() {
 //                    operator = InequalityType.LESS_THAN_OR_EQUAL,
 //                )
 //            )
-        ).asString.also(::println)
+//        ).asString.also(::println)
     }
 }

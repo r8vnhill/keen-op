@@ -22,16 +22,8 @@ import cl.ravenhill.keen.problem.Objective
  *
  * @property values The ordered list of values that define this solution.
  */
-interface Solution<T> {
+interface Solution<T> : List<T> {
 
     /** The underlying list of values that represent the solution. */
     val values: List<T>
-
-    /**
-     * Returns the value at the specified [index] in the solution.
-     *
-     * @param index The position of the value to retrieve.
-     * @return The value at the given index.
-     */
-    operator fun get(index: Int): T = values[index]
 }

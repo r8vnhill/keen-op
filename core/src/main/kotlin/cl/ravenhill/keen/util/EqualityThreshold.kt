@@ -6,11 +6,15 @@
 package cl.ravenhill.keen.util
 
 import arrow.core.Either
+import arrow.core.Either.Left
+import arrow.core.Either.Right
 import arrow.core.raise.either
 import arrow.core.raise.ensure
 import cl.ravenhill.keen.exceptions.InvalidThresholdException
-import arrow.core.Either.Right
-import arrow.core.Either.Left
+import cl.ravenhill.keen.util.EqualityThreshold.Companion.DEFAULT
+import cl.ravenhill.keen.util.EqualityThreshold.Companion.EXACT
+import cl.ravenhill.keen.util.EqualityThreshold.Companion.RELAXED
+import cl.ravenhill.keen.util.EqualityThreshold.Companion.STRICT
 
 /**
  * Represents a validated numerical tolerance used for approximate floating-point equality.

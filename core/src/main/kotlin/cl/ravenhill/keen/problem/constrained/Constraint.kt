@@ -3,15 +3,10 @@
  * 2-Clause BSD License.
  */
 
-package cl.ravenhill.keen.problem
+package cl.ravenhill.keen.problem.constrained
 
-import arrow.core.Either
-import arrow.core.raise.either
 import cl.ravenhill.keen.Solution
-import cl.ravenhill.keen.exceptions.InvalidThresholdException
-import cl.ravenhill.keen.util.EqualityThreshold
 import cl.ravenhill.keen.util.InequalityType
-import kotlin.math.abs
 
 /**
  * Represents a generic constraint on a [Solution] that evaluates to a boolean.
@@ -30,44 +25,6 @@ import kotlin.math.abs
 sealed interface Constraint<T> : (Solution<T>) -> Boolean {
     val left: (Solution<T>) -> Double
     val right: (Solution<T>) -> Double
-}
-
-interface EqualityConstraint<T> : Constraint<T> {
-
-    val threshold: EqualityThreshold
-
-    override fun invoke(solution: Solution<T>) =
-        abs(left(solution) - right(solution)) <= threshold
-
-    operator fun Double.compareTo(other: EqualityThreshold) = when {
-        this < other.value -> -1
-        this > other.value -> 1
-        else -> 0
-    }
-
-    companion object {
-        context(threshold: Either<InvalidThresholdException, EqualityThreshold>)
-        operator fun <T> invoke(
-            left: (Solution<T>) -> Double,
-            right: (Solution<T>) -> Double
-        ): Either<InvalidThresholdException, EqualityConstraint<T>> = either {
-            val boundThreshold = threshold.bind()
-            object : EqualityConstraint<T> {
-                override val threshold: EqualityThreshold = boundThreshold
-                override val left: (Solution<T>) -> Double = left
-                override val right: (Solution<T>) -> Double = right
-            }
-        }
-
-        fun <T> withDefaultThreshold(
-            lhs: (Solution<T>) -> Double,
-            rhs: (Solution<T>) -> Double,
-            threshold: Double = EqualityThreshold.DEFAULT
-        ): Either<InvalidThresholdException, EqualityConstraint<T>> =
-            with(EqualityThreshold(threshold)) {
-                invoke(lhs, rhs)
-            }
-    }
 }
 
 /**
@@ -108,7 +65,7 @@ interface InequalityConstraint<T> : Constraint<T> {
         operator fun <T> invoke(
             left: (Solution<T>) -> Double,
             right: (Solution<T>) -> Double,
-            operator: InequalityType = InequalityType.LESS_THAN,
+            operator: InequalityType,
         ): InequalityConstraint<T> = object : InequalityConstraint<T> {
             override val type: InequalityType = operator
             override val left: (Solution<T>) -> Double = left

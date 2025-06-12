@@ -5,7 +5,7 @@
 
 package cl.ravenhill.keen.util
 
-import cl.ravenhill.keen.problem.InequalityConstraint
+import cl.ravenhill.keen.problem.constrained.InequalityConstraint
 
 /**
  * Represents the type of inequality used in an [InequalityConstraint].
