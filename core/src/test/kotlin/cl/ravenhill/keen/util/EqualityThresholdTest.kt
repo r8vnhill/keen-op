@@ -40,24 +40,22 @@ class EqualityThresholdTest : FreeSpec({
             }
 
             listOf(
-                InvalidCreationTest("NaN", Arb.constant(Double.NaN), "Threshold cannot be NaN"),
+                InvalidCreationTest("NaN", Arb.constant(Double.NaN)) { "Threshold should not be NaN, but was NaN" },
                 InvalidCreationTest(
                     "an infinite",
-                    Exhaustive.collection(listOf(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)),
-                    "Threshold should be finite"
-                ),
+                    Exhaustive.collection(listOf(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY))
+                ) { "Threshold should be finite, but was $it" },
                 InvalidCreationTest(
                     "a negative value",
-                    Arb.double(includeNonFiniteEdgeCases = false).filter { it < 0.0 },
-                    "Threshold should be non-negative"
-                )
+                    Arb.double(includeNonFiniteEdgeCases = false).filter { it < 0.0 }
+                ) { "Threshold should be non-negative, but was $it" }
             ).forEach { (testName, gen, expectedMessage) ->
                 "$testName value should" - {
                     "return a Left with an InvalidThresholdException" {
                         checkAll(gen) { x ->
                             threshold(x)
                                 .shouldBeLeft()
-                                .shouldHaveMessage(expectedMessage)
+                                .shouldHaveMessage(expectedMessage(x))
                         }
                     }
                 }
@@ -84,5 +82,5 @@ class EqualityThresholdTest : FreeSpec({
 private data class InvalidCreationTest(
     val testName: String,
     val gen: Gen<Double>,
-    val expectedMessage: String
+    val expectedMessage: (Double) -> String
 )

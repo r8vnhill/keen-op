@@ -74,9 +74,9 @@ value class EqualityThreshold private constructor(val value: Double) {
          *   [InvalidThresholdException].
          */
         operator fun invoke(value: Double): Either<InvalidThresholdException, EqualityThreshold> = either {
-            ensure(!value.isNaN()) { InvalidThresholdException("Threshold cannot be NaN") }
-            ensure(value.isFinite()) { InvalidThresholdException("Threshold should be finite") }
-            ensure(value >= 0.0) { InvalidThresholdException("Threshold should be non-negative") }
+            ensure(!value.isNaN()) { InvalidThresholdException(should = "not be NaN", Double.NaN) }
+            ensure(value.isFinite()) { InvalidThresholdException(should = "be finite", value) }
+            ensure(value >= 0.0) { InvalidThresholdException(should = "be non-negative", value) }
             EqualityThreshold(value)
         }
     }
