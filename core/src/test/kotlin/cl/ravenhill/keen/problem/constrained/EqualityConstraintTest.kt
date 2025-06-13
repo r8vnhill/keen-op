@@ -17,6 +17,10 @@ import cl.ravenhill.keen.util.EqualityThreshold
 import io.kotest.assertions.arrow.core.shouldBeLeft
 import io.kotest.assertions.arrow.core.shouldBeRight
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.datatest.withData
+import io.kotest.engine.names.WithDataTestName
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.kotest.property.Arb
@@ -105,17 +109,134 @@ class EqualityConstraintTest : FreeSpec({
                         }
                     }
                     "return a Left with an InvalidThresholdException if the threshold is invalid" {
-                        checkAll(
-                            Arb.double(max = 0.0)
-                                .filter { it < 0.0 || it.isNaN() || it.isInfinite() }, // Invalid thresholds
-                            arbFunction(),  // Functions to apply to the solution
-                            arbFunction()   // Functions to apply to the solution
-                        ) { invalidThreshold, left, right ->
-                            EqualityConstraint.withDefaultThreshold(left, right, invalidThreshold)
-                                .shouldBeLeft()
-                                .shouldHaveMessage(
-                                    "Threshold should be non-negative, but was $invalidThreshold"
-                                )
+                        with(Validity.AllInvalid) {
+                            checkAll(
+                                Arb.double(max = 0.0, includeNonFiniteEdgeCases = false)
+                                    .filter { it < 0.0 }, // Invalid thresholds
+                                arbFunction(),  // Functions to apply to the solution
+                                arbFunction()   // Functions to apply to the solution
+                            ) { invalidThreshold, left, right ->
+                                EqualityConstraint.withDefaultThreshold(left, right, invalidThreshold)
+                                    .shouldBeLeft()
+                                    .shouldHaveMessage(
+                                        EqualityThreshold(invalidThreshold)
+                                            .leftOrElse { error("Expected an invalid threshold, but got: $it") }
+                                            .message
+                                            .shouldNotBeNull {
+                                                "Invalid threshold message should not be null, this is probably a " +
+                                                        "bug on the test setup"
+                                            }
+                                    )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        "invoking the constraint" - {
+            data class Case(
+                val threshold: Double,
+                val leftFn: (Solution<Int>) -> Double,
+                val rightFn: (Solution<Int>) -> Double,
+                val solution: Solution<Int>
+            ) : WithDataTestName {
+                override fun dataTestName() = "threshold=$threshold | solution=${solution.toList()}"
+            }
+
+            "with a solution that meets the equality condition should" - {
+                "return true" - {
+                    withData(
+                        /* 1️⃣ Exact equality, zero threshold */
+                        Case(
+                            threshold = 0.0,
+                            leftFn   = { it.first().toDouble() },
+                            rightFn  = { it.first().toDouble() },
+                            solution = Solution(listOf(7))
+                        ),
+                        /* 2️⃣ Off-by-epsilon, inside a tiny tolerance */
+                        Case(
+                            threshold = 1e-6,
+                            leftFn   = { it.first().toDouble() },
+                            rightFn  = { it.first().toDouble() + 9e-7 },   // diff = 0.0000009 < 1e-6
+                            solution = Solution(listOf(42))
+                        ),
+                        /* 3️⃣ Aggregate (sum) with modest tolerance */
+                        Case(
+                            threshold = 0.5,
+                            leftFn   = { it.sumOf(Int::toDouble) },
+                            rightFn  = { it.sumOf(Int::toDouble) + 0.3 },  // diff = 0.3 < 0.5
+                            solution = Solution(listOf(1, 2, 3, 4))
+                        ),
+                        /* 4️⃣ Negative numbers – average comparison */
+                        Case(
+                            threshold = 0.25,
+                            leftFn   = { it.map(Int::toDouble).average() },
+                            rightFn  = { it.map(Int::toDouble).average() + 0.2 },
+                            solution = Solution(listOf(-10, -20, -30))
+                        ),
+                        /* 5️⃣ Large magnitude values with larger tolerance */
+                        Case(
+                            threshold = 2.0,
+                            leftFn   = { it[0].toDouble() },
+                            rightFn  = { it[0].toDouble() + 1.9 },         // diff = 1.9 < 2.0
+                            solution = Solution(listOf(10_000, 20_000))
+                        )
+                    ) { (threshold, leftFn, rightFn, solution) ->
+                        with(EqualityThreshold(threshold)) {
+                            EqualityConstraint(leftFn, rightFn)
+                                .shouldBeRight()          // Constraint must be created successfully
+                                .invoke(solution)
+                                .shouldBeTrue()           // …and must evaluate to true
+                        }
+                    }
+                }
+            }
+            "with a solution that does not meet the equality condition should" - {
+                "return false" - {
+                    withData(
+                        /* 1️⃣ Zero threshold but different values (easy miss) */
+                        Case(
+                            threshold = 0.0,
+                            leftFn    = { it.first().toDouble() },
+                            rightFn   = { it.first().toDouble() + 1.0 },
+                            solution  = Solution(listOf(10))
+                        ),
+                        /* 2️⃣ Difference *just* above a tiny tolerance */
+                        Case(
+                            threshold = 1e-6,
+                            leftFn    = { it.first().toDouble() },
+                            rightFn   = { it.first().toDouble() + 1.1e-6 }, // diff = 1.1 µ > tol
+                            solution  = Solution(listOf(3))
+                        ),
+                        /* 3️⃣ Sum deviates beyond tolerance */
+                        Case(
+                            threshold = 0.5,
+                            leftFn    = { it.sumOf(Int::toDouble) },
+                            rightFn   = { it.sumOf(Int::toDouble) + 0.6 },
+                            solution  = Solution(listOf(2, 4, 6))
+                        ),
+                        /* 4️⃣ Negative numbers, average outside threshold */
+                        Case(
+                            threshold = 0.25,
+                            leftFn    = { it.map(Int::toDouble).average() },
+                            rightFn   = { it.map(Int::toDouble).average() - 0.3 }, // |diff| = 0.3 > 0.25
+                            solution  = Solution(listOf(-5, -10, -15))
+                        ),
+                        /* 5️⃣ Large magnitude: diff bigger than tolerance */
+                        Case(
+                            threshold = 2.0,
+                            leftFn    = { it[0].toDouble() },
+                            rightFn   = { it[0].toDouble() + 2.1 }, // diff = 2.1 > 2.0
+                            solution  = Solution(listOf(50_000, 1))
+                        )
+                    ) { (threshold, leftFn, rightFn, solution) ->
+
+                        with(EqualityThreshold(threshold)) {
+                            EqualityConstraint(leftFn, rightFn)
+                                .shouldBeRight()          // creation succeeds
+                                .invoke(solution)         // evaluation
+                                .shouldBeFalse()          // ❌ must fail equality
                         }
                     }
                 }

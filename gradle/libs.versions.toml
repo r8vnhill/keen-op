@@ -32,5 +32,12 @@ kotlin-bin-compatibility = { id = "org.jetbrains.kotlinx.binary-compatibility-va
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 [bundles]
-kotest = ["kotest-assertions-core", "kotest-framework-datatest", "kotest-framework-engine", "kotest-property", "kotest-runner-junit5", "kotest-arrow"]
+kotest = [
+    "kotest-assertions-core",
+#    "kotest-framework-datatest",
+    "kotest-framework-engine",
+    "kotest-property",
+    "kotest-runner-junit5",
+    "kotest-arrow"
+]
 arrow = ["arrow-core"]
