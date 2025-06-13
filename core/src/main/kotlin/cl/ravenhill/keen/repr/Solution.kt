@@ -3,9 +3,9 @@
  * 2-Clause BSD License.
  */
 
-package cl.ravenhill.keen
+package cl.ravenhill.keen.repr
 
-import cl.ravenhill.keen.Solution.Companion.invoke
+import cl.ravenhill.keen.repr.Solution.Companion.invoke
 import cl.ravenhill.keen.problem.Objective
 import cl.ravenhill.keen.problem.constrained.Constraint
 

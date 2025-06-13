@@ -8,7 +8,7 @@ package api.core.problem
 import arrow.core.nonEmptyListOf
 import arrow.core.raise.either
 import arrow.core.recover
-import cl.ravenhill.keen.Solution
+import cl.ravenhill.keen.repr.Solution
 import cl.ravenhill.keen.exceptions.KeenException
 import cl.ravenhill.keen.problem.Objective
 import cl.ravenhill.keen.problem.Problem

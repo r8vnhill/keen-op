@@ -5,7 +5,7 @@
 
 package cl.ravenhill.keen.problem.constrained
 
-import cl.ravenhill.keen.Solution
+import cl.ravenhill.keen.repr.Solution
 
 /**
  * Represents a generic constraint on a [Solution] that evaluates to a boolean.
@@ -25,4 +25,3 @@ sealed interface Constraint<T> : (Solution<T>) -> Boolean {
     val left: (Solution<T>) -> Double
     val right: (Solution<T>) -> Double
 }
-

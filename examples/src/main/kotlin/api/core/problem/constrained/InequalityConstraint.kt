@@ -5,7 +5,7 @@
 
 package api.core.problem.constrained
 
-import cl.ravenhill.keen.Solution
+import cl.ravenhill.keen.repr.Solution
 import cl.ravenhill.keen.problem.constrained.InequalityConstraint
 import cl.ravenhill.keen.util.InequalityType
 

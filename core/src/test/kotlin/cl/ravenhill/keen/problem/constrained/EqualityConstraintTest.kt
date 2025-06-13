@@ -10,7 +10,7 @@ import arrow.core.getOrElse
 import arrow.core.left
 import arrow.core.right
 import arrow.core.tail
-import cl.ravenhill.keen.Solution
+import cl.ravenhill.keen.repr.Solution
 import cl.ravenhill.keen.exceptions.InvalidThresholdException
 import cl.ravenhill.keen.matchers.shouldBeCloseTo
 import cl.ravenhill.keen.util.EqualityThreshold

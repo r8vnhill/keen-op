@@ -5,7 +5,7 @@
 
 package api.benchmark
 
-import cl.ravenhill.keen.Solution
+import cl.ravenhill.keen.repr.Solution
 import cl.ravenhill.keen.benchmark.rosenbrockProblem
 import cl.ravenhill.keen.benchmark.sphereConstraint
 

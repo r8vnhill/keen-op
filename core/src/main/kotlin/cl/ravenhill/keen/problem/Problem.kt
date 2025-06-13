@@ -8,7 +8,7 @@ package cl.ravenhill.keen.problem
 import arrow.core.NonEmptyCollection
 import arrow.core.NonEmptyList
 import arrow.core.nonEmptyListOf
-import cl.ravenhill.keen.Solution
+import cl.ravenhill.keen.repr.Solution
 import cl.ravenhill.keen.problem.constrained.Constraint
 
 /**

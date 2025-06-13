@@ -5,9 +5,22 @@
 
 package cl.ravenhill.keen.benchmark
 
+import cl.ravenhill.keen.problem.Objective
+import cl.ravenhill.keen.problem.Problem
+import cl.ravenhill.keen.problem.constrained.Constraint
 import cl.ravenhill.keen.problem.constrained.InequalityConstraint
+import cl.ravenhill.keen.repr.Solution
 import cl.ravenhill.keen.util.InequalityType
 import kotlin.math.pow
+
+val sphereObjective = Objective { solution: Solution<Double> ->
+    solution.sumOf { it.pow(2) }
+}
+
+fun sphereProblem(constraints: List<Constraint<Double>> = listOf()) = Problem(
+    objective = sphereObjective,
+    constraints = constraints,
+)
 
 /**
  * Builds a spherical inequality constraint for a subset of the solution's dimensions.

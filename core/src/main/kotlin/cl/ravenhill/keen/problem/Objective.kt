@@ -5,7 +5,7 @@
 
 package cl.ravenhill.keen.problem
 
-import cl.ravenhill.keen.Solution
+import cl.ravenhill.keen.repr.Solution
 
 /**
  * Represents an objective function in an optimization problem.

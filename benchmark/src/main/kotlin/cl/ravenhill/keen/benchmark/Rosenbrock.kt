@@ -5,7 +5,6 @@
 
 package cl.ravenhill.keen.benchmark
 
-import cl.ravenhill.keen.Solution
 import cl.ravenhill.keen.problem.Objective
 import cl.ravenhill.keen.problem.Problem
 import cl.ravenhill.keen.problem.constrained.Constraint

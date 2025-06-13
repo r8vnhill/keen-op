@@ -7,7 +7,7 @@ package cl.ravenhill.keen.problem.constrained
 
 import arrow.core.Either
 import arrow.core.raise.either
-import cl.ravenhill.keen.Solution
+import cl.ravenhill.keen.repr.Solution
 import cl.ravenhill.keen.exceptions.InvalidThresholdException
 import cl.ravenhill.keen.util.EqualityThreshold
 import kotlin.math.abs
