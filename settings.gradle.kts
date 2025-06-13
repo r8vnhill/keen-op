@@ -46,3 +46,4 @@ rootProject.name = "keen-op"
 // Include project modules
 include(":core")
 include(":examples")
+include(":benchmark")

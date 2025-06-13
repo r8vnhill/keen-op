@@ -6,56 +6,85 @@
 package cl.ravenhill.keen.problem
 
 import arrow.core.NonEmptyCollection
+import arrow.core.NonEmptyList
 import arrow.core.nonEmptyListOf
+import cl.ravenhill.keen.Solution
 import cl.ravenhill.keen.problem.constrained.Constraint
-import cl.ravenhill.keen.util.EqualityThreshold
 
-interface Problem {
-    val objectives: NonEmptyCollection<Objective<*>>
-    val constraints: Collection<Constraint<*>>
+/**
+ * Represents an optimization problem consisting of one or more objective functions and optional constraints.
+ *
+ * A [Problem] encapsulates all the components needed to evaluate the quality and feasibility of candidate solutions in
+ * an optimization task.
+ * Each problem must have at least one [Objective], and may optionally include a collection of [Constraint]s that
+ * restrict the feasible solution space.
+ *
+ * ## Usage:
+ *
+ * The companion object provides two factory methods to construct a [Problem] using either a single objective or
+ * multiple objectives via a [NonEmptyCollection].
+ *
+ * ### Example 1: Single-objective problem without constraints
+ *
+ * ```kotlin
+ * val objective = Objective<Double> { it.sum() }
+ * val problem = Problem(objective)
+ * ```
+ *
+ * ### Example 2: Multi-objective problem with constraints
+ * ```kotlin
+ * val f1 = Objective<Double> { it.sum() }
+ * val f2 = Objective<Double> { it.maxOrNull() ?: 0.0 }
+ * val constraint = sphereConstraint(dims = 3)
+ *
+ * val problem = Problem(f1, f2, constraints = listOf(constraint))
+ * ```
+ *
+ * Here, `sphereConstraint` is a function from the [benchmark](https://www.github.com/r8vnhill/keen-op/tree/main/benchmark)
+ * module.
+ *
+ * ## Note:
+ *
+ * A collection of well-known problems can be found in the [benchmark](https://www.github.com/r8vnhill/keen-op/tree/main/benchmark)
+ * module.
+ *
+ * @param T The type of the representation stored in the [Solution]s evaluated by this problem.
+ * @property objectives The non-empty collection of objective functions to be optimized.
+ * @property constraints The constraints that candidate solutions must satisfy.
+ */
+interface Problem<T> {
+
+    val objectives: NonEmptyList<Objective<T>>
+    val constraints: Collection<Constraint<T>>
 
     companion object {
-        operator fun invoke(
-            objectives: NonEmptyCollection<Objective<*>>,
-            constraints: Collection<Constraint<*>> = listOf()
-        ) =
-            object : Problem {
-                override val objectives = objectives
-                override val constraints = constraints
-            }
-
-        operator fun invoke(
-            objective: Objective<*>,
-            vararg objectives: Objective<*>,
-            constraints: Collection<Constraint<*>> = listOf()
-        ) = Problem(nonEmptyListOf(objective, *objectives), constraints)
-    }
-}
-
-val Problem.asString: String
-    get() = "Problem(objectives=$objectives, constraints=$constraints)"
-
-fun main() {
-    with(EqualityThreshold(1e-9)) {
-        /* **Example problem: Maximize the function**
-           f(x1, x2, x3, x4) = x1 * x4 * (x1 + x2 + x3) + x3
-           subject to:
-           1. x1^2 + x2^2 + x3^2 + x4^2 = 40
-           2. x1 * x2 * x3 * x4 <= 25
+        /**
+         * Creates a [Problem] from a non-empty collection of objectives.
+         *
+         * @param objectives A non-empty collection of [Objective]s.
+         * @param constraints Optional constraints that restrict the solution space.
+         * @return A new [Problem] instance.
          */
-//        Problem(
-//            Objective<Int> { (it[0] * it[3] * (it[0] + it[1] + it[2]) + it[2]).toDouble() },
-//            constraints = listOf(
-//                EqualityConstraint<Int>(
-//                    left = { (it[0] * it[0] + it[1] * it[1] + it[2] * it[2] + it[3] * it[3]).toDouble() },
-//                    right = { 40.0 },
-//                ),
-//                InequalityConstraint(
-//                    left = { (it[0] * it[1] * it[2] * it[3]).toDouble() },
-//                    right = { 25.0 },
-//                    operator = InequalityType.LESS_THAN_OR_EQUAL,
-//                )
-//            )
-//        ).asString.also(::println)
+        operator fun <T> invoke(
+            objectives: NonEmptyList<Objective<T>>,
+            constraints: Collection<Constraint<T>> = listOf()
+        ) = object : Problem<T> {
+            override val objectives = objectives
+            override val constraints = constraints
+        }
+
+        /**
+         * Creates a [Problem] from one or more objectives.
+         *
+         * @param objective The primary [Objective].
+         * @param objectives Additional objectives, if any.
+         * @param constraints Optional constraints to be applied to the problem.
+         * @return A new [Problem] instance.
+         */
+        operator fun <T> invoke(
+            objective: Objective<T>,
+            vararg objectives: Objective<T>,
+            constraints: Collection<Constraint<T>> = listOf()
+        ) = Problem(nonEmptyListOf(objective, *objectives), constraints)
     }
 }

@@ -45,14 +45,7 @@ class InequalityConstraintTest : FreeSpec({
     ) = object : WithDataTestName {
         override fun dataTestName(): String = buildString {
             append("${sol.left()} ")
-            append(
-                when (op) {
-                    InequalityType.LESS_THAN -> "<"
-                    InequalityType.GREATER_THAN -> ">"
-                    InequalityType.LESS_THAN_OR_EQUAL -> "≤"
-                    InequalityType.GREATER_THAN_OR_EQUAL -> "≥"
-                }
-            )
+            append(op.symbol)
             append(" ${sol.right()}")
         }
 
