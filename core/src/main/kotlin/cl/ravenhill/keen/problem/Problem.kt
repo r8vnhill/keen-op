@@ -8,7 +8,6 @@ package cl.ravenhill.keen.problem
 import arrow.core.NonEmptyCollection
 import arrow.core.nonEmptyListOf
 import cl.ravenhill.keen.problem.constrained.Constraint
-import cl.ravenhill.keen.problem.constrained.InequalityConstraint
 import cl.ravenhill.keen.util.EqualityThreshold
 
 interface Problem {

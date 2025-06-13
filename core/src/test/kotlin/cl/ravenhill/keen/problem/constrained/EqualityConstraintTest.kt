@@ -278,5 +278,4 @@ private fun arbFunction(): Arb<(Solution<Int>) -> Double> = Arb.element(function
 private sealed interface Validity {
     data object AllValid : Validity
     data object AllInvalid : Validity
-    data object Mixed : Validity
 }
