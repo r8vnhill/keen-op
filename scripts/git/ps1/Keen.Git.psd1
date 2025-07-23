@@ -1,6 +1,6 @@
 @{
     RootModule        = 'Keen.Git.psm1'
-    ModuleVersion     = '0.0.1'
+    ModuleVersion     = '0.1.0'
     GUID              = '30cd722f-ccb0-46a3-a1da-d09194ec5954'
     Author            = 'Ignacio Slater-Muñoz'
     CompanyName       = 'KEEN-OP'
