@@ -1,4 +1,3 @@
-# DisableGitUtilities.ps1
 [CmdletBinding()]
 param ()
 
