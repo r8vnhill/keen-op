@@ -42,28 +42,20 @@ function Invoke-GitCheckout {
 
     $gitArgs = Get-GitCheckoutArgs -BranchName $BranchName -Remote $Remote
 
-    if ($PSCmdlet.MyInvocation.BoundParameters.ContainsKey('Verbose')) {
-        $gitArgs += '--verbose'
-    }
-
     $gitArgs += $ExtraArgs
 
     Write-Verbose "Running: git $($gitArgs -join ' ')"
 
-    try {
-        $output = & $git @gitArgs 2>&1
-        if ($LASTEXITCODE -ne 0) {
-            throw "❌ Git checkout failed: $output"
-        }
+    $output = & $git @gitArgs 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        throw "❌ Git checkout failed: $output"
+    }
 
-        Write-Verbose $output
-        Write-Host "✅ Successfully checked out to branch '$BranchName'."
+    Write-Verbose $output
+    Write-Host "✅ Successfully checked out to branch '$BranchName'."
 
-        if ($PassThru) {
-            return $output
-        }
-    } catch {
-        Write-Error "❌ Git checkout failed: $_"
+    if ($PassThru) {
+        return $output
     }
 }
 
