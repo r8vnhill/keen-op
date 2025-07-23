@@ -8,7 +8,7 @@
     FunctionsToExport = @('Invoke-GitCheckout')
     CmdletsToExport   = @()
     VariablesToExport = @()
-    AliasesToExport   = @()
+    AliasesToExport   = @('Git-Checkout')
 
     PrivateData = @{
         PSData = @{
