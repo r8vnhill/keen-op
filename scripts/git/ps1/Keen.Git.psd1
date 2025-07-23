@@ -1,16 +1,20 @@
 @{
-    RootModule = 'Keen.Git.psm1'
-    ModuleVersion = '0.0.1'
-    GUID = '30cd722f-ccb0-46a3-a1da-d09194ec5954'
-    Author = 'Ignacio Slater-Muñoz'
-    CompanyName = 'KEEN-GO'
-    Copyright = '(c) Ignacio Slater-Muñoz. All rights reserved.'
-    FunctionsToExport = @()
-    CmdletsToExport = @()
+    RootModule        = 'Keen.Git.psm1'
+    ModuleVersion     = '0.0.1'
+    GUID              = '30cd722f-ccb0-46a3-a1da-d09194ec5954'
+    Author            = 'Ignacio Slater-Muñoz'
+    CompanyName       = 'KEEN-OP'
+    Copyright         = '(c) Ignacio Slater-Muñoz. All rights reserved.'
+    FunctionsToExport = @('Invoke-GitCheckout')
+    CmdletsToExport   = @()
     VariablesToExport = @()
-    AliasesToExport = @()
+    AliasesToExport   = @('Git-Checkout')
+
     PrivateData = @{
         PSData = @{
-        } # End of PSData hashtable
-    } # End of PrivateData hashtable
+            Tags       = @('git', 'checkout', 'version-control')
+            LicenseUri = 'https://opensource.org/licenses/BSD-2-Clause'
+            ProjectUri = 'https://github.com/keen-op'
+        }
+    }
 }

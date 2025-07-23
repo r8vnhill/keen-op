@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.1.20"
+kotlin = "2.2.0-RC"
 kotlin-bin-compatibility-validator = "0.17.0"
 detekt = "1.23.8"
 kotest = "6.0.0.M4"
