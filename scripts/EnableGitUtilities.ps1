@@ -1,4 +1,3 @@
-# EnableGitUtilities.ps1
 [CmdletBinding()]
 param ()
 

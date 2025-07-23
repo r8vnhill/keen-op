@@ -1,5 +1,6 @@
 . $PSScriptRoot/../internal/Test-GitBranchExists.ps1
 . $PSScriptRoot/../internal/Get-CommandOrElse.ps1
+. $PSScriptRoot/../internal/Test-GitRemoteBranchExists.ps1
 
 <#
 .SYNOPSIS
