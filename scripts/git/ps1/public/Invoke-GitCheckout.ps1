@@ -1,6 +1,5 @@
 . $PSScriptRoot/../internal/Test-GitBranchExists.ps1
 . $PSScriptRoot/../internal/Get-CommandOrElse.ps1
-. $PSScriptRoot/../internal/Test-GitRemoteBranchExists.ps1
 
 <#
 .SYNOPSIS
@@ -91,7 +90,7 @@ function Get-GitCheckoutArgs {
     Write-Verbose "Branch '$BranchName' not found locally. Fetching remotes..."
     git fetch --all | Out-Null
 
-    if (-not (Test-GitRemoteBranchExists -BranchName $BranchName)) {
+    if (-not (Test-GitRemoteBranchExists -BranchName $BranchName -Remote $Remote)) {
         throw "❌ Branch '$BranchName' not found locally or remotely."
     }
 

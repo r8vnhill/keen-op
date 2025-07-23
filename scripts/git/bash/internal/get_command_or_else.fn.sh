@@ -47,5 +47,5 @@ get_command_or_else() {
         eval "$fallback"
     fi
 
-    return $? # Return the exit status of the fallback command or function
+    return $?
 }
