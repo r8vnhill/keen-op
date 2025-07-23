@@ -7,7 +7,7 @@
 
 **KEEN-OP** aims to be a flexible and extensible optimization framework for solving a wide range of optimization problems, including combinatorial, numerical, and multi-objective domains.
 
-> ⚠️ **Project status:** Early-stage / pre-alpha  
+> [!warning] Project status: Early-stage / pre-alpha  
 > KEEN-OP is currently under active development. At this stage, the repository primarily contains project configuration and build setup. No user-facing features are implemented yet.
 
 ## ✨ Goals (planned)
