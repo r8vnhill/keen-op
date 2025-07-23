@@ -51,7 +51,7 @@ function Invoke-GitCheckout {
         throw "❌ Git checkout failed: $output"
     }
 
-    Write-Verbose $output
+    Write-Verbose ($output -join "`n")
     Write-Host "✅ Successfully checked out to branch '$BranchName'."
 
     if ($PassThru) {
